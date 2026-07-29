@@ -26,12 +26,10 @@ import Image from 'next/image';
 // Navigation items configuration
 const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'Services', href: '/services' },
+    { label: 'Properties', href: '/properties' },
     { label: 'Pricing', href: '/pricing' },
-    { label: 'Features', href: '/features' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
-    { label: 'News', href: '/news' },
     { label: 'Premium', href: '/premium' },
 ];
 
@@ -47,10 +45,10 @@ export function Navbar({ user }: NavbarProps) {
 
     const handleUserMenuAction = async (action: string) => {
         if (action === 'dashboard') {
-            if (user.data.profile.role === 'USER') {
-                router.push('/dashboard');
-            } else if (user.data.profile.role === 'AUTHOR') {
-                router.push('/author-dashboard');
+            if (user.data.profile.role === 'TENANT') {
+                router.push('/tenant-dashboard');
+            } else if (user.data.profile.role === 'LANDLORD') {
+                router.push('/landlord-dashboard');
             } else if (user.data.profile.role === 'ADMIN') {
                 router.push('/admin-dashboard');
             }
@@ -143,7 +141,7 @@ export function Navbar({ user }: NavbarProps) {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
-                        <Link href={'/login'}>
+                        <Link href={'/auth/login'}>
                             <Button className="cursor-pointer bg-cyan-600 hover:bg-yellow-500">
                                 Login
                             </Button>
