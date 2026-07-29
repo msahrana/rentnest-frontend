@@ -1,13 +1,8 @@
 'use client';
 
-import Logo from '../../public/assets/logo.png'
+import Logo from '../../public/assets/logo.png';
 import { logout } from '@/service/logout';
-import {
-    LayoutDashboard,
-    LogOut,
-    Settings,
-    User,
-} from 'lucide-react';
+import { LayoutDashboard, LogOut, Settings, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -64,13 +59,13 @@ export function Navbar({ user }: NavbarProps) {
     };
 
     return (
-        <nav className="border-b border-border">
+        <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-5 shrink-0">
                         {/* <CircleUserRound className="size-6 text-primary" /> */}
-                        <Image src={Logo} width={40} height={40} alt='Logo'/>
+                        <Image src={Logo} width={40} height={40} alt="Logo" />
                         <span className="text-2xl font-extrabold text-cyan-600">
                             Rent<span className="text-yellow-500">Nest</span>
                         </span>
@@ -93,7 +88,7 @@ export function Navbar({ user }: NavbarProps) {
                     {user.success ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <div className="cursor-pointer">
+                                <div className="cursor-pointer justify-end">
                                     <div className="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center">
                                         <User className="w-4 h-4 text-primary" />
                                     </div>
