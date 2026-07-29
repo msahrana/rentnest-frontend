@@ -54,7 +54,7 @@ export function Navbar({ user }: NavbarProps) {
         if (action === 'logout') {
             await logout();
             toast.success('User Logged Out Successfully!');
-            router.push('/login');
+            router.push('/auth/login');
         }
     };
 

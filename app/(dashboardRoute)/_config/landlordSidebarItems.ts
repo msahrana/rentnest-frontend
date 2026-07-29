@@ -8,8 +8,8 @@ export const LANDLORD_SIDEBAR_ITEMS: ISidebarItem[] = [
         icon: LayoutDashboard,
     },
     {
-        label: 'My Posts',
-        href: '/author-dashboard/my-posts',
+        label: 'My Properties',
+        href: '/author-dashboard/my-properties',
         icon: FileText,
     },
     {

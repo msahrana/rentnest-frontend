@@ -13,7 +13,7 @@ const DashboardHeader = ({
     return (
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between pt-2">
             <div>
-                <h1 className="text-2xl font-bold tracking-tight text-green-500">
+                <h1 className="text-2xl font-bold tracking-tight text-cyan-600">
                     {title}
                 </h1>
 

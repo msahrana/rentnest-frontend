@@ -16,12 +16,11 @@ const LandlordDashboardPage = async () => {
     return (
         <div className="space-y-6">
             {/* Header */}
-
             <DashboardHeader
                 title={
                     <>
                         Welcome to{' '}
-                        <span className="text-cyan-600">Landlord</span>{' '}
+                        <span className="text-yellow-500">Landlord</span>{' '}
                         Dashboard
                     </>
                 }
@@ -29,7 +28,6 @@ const LandlordDashboardPage = async () => {
             />
 
             {/* Statistics */}
-
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <StatCard
                     title="Total Properties"
@@ -61,7 +59,6 @@ const LandlordDashboardPage = async () => {
             </div>
 
             {/* Property Overview */}
-
             <div className="rounded-xl border p-6">
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold">My Properties</h2>
@@ -114,7 +111,6 @@ const LandlordDashboardPage = async () => {
             </div>
 
             {/* Rental Requests */}
-
             <div className="rounded-xl border p-6">
                 <h2 className="text-xl font-semibold">
                     Recent Rental Requests
@@ -170,7 +166,6 @@ const LandlordDashboardPage = async () => {
             </div>
 
             {/* Quick Actions */}
-
             <div className="rounded-xl border p-6">
                 <h2 className="text-xl font-semibold">Quick Actions</h2>
 
@@ -208,7 +203,6 @@ const LandlordDashboardPage = async () => {
             </div>
 
             {/* Performance */}
-
             <div className="rounded-xl border p-6">
                 <h2 className="text-xl font-semibold">Performance Summary</h2>
 
