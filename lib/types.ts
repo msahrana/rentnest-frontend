@@ -1,3 +1,6 @@
+import { LucideProps } from 'lucide-react';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
+
 type IUser = {
     success: boolean;
     message: string;
@@ -24,4 +27,12 @@ type IUser = {
 
 export type NavbarProps = {
     user: IUser;
+};
+
+export type ISidebarItem = {
+    label: string;
+    href: string;
+    icon: ForwardRefExoticComponent<
+        Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
+    >;
 };
