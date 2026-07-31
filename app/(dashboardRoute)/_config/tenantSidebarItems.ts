@@ -4,7 +4,7 @@ import { CircleUserRoundIcon, FileText, LayoutDashboard } from 'lucide-react';
 export const TENANT_SIDEBAR_ITEMS: ISidebarItem[] = [
     {
         label: 'Dashboard',
-        href: '/dashboard',
+        href: '/tenant-dashboard',
         icon: LayoutDashboard,
     },
     {
