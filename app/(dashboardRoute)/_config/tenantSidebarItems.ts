@@ -9,12 +9,12 @@ export const TENANT_SIDEBAR_ITEMS: ISidebarItem[] = [
     },
     {
         label: 'My Requests',
-        href: '/dashboard/my-requests',
+        href: '/tenant-dashboard/my-requests',
         icon: FileText,
     },
     {
         label: 'Profile',
-        href: '/dashboard/profile',
+        href: '/tenant-dashboard/profile',
         icon: CircleUserRoundIcon,
     },
 ];

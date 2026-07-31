@@ -122,3 +122,90 @@ export interface IPayment {
 
     rentalRequest: IRentalRequestPayment;
 }
+
+export interface RentalRequest {
+    id: string;
+    tenantId: string;
+    propertyId: string;
+    moveInDate: string;
+    message: string;
+    status: RentalRequestStatus;
+    createdAt: string;
+    updatedAt: string;
+
+    property: {
+        id: string;
+        title: string;
+        description: string;
+        location: string;
+        address: string;
+        rent: number;
+        bedrooms: number;
+        bathrooms: number;
+        area: number;
+        propertyType: string;
+        amenities: string[];
+        thumbnail: string;
+        images: string[];
+        status: string;
+        landlordId: string;
+        categoryId: string;
+
+        landlord: {
+            id: string;
+            name: string;
+            email: string;
+        };
+
+        category: {
+            id: string;
+            name: string;
+            description: string;
+        };
+    };
+
+    payment: {
+        id: string;
+        rentalRequestId: string;
+        userId: string;
+        transactionId: string;
+        amount: number;
+        method: string;
+        provider: string;
+        status: string;
+        paidAt: string;
+        stripeCustomerId: string;
+        currentPeriodEnd: string;
+        createdAt: string;
+        updatedAt: string;
+    } | null;
+}
+
+export interface RentalResponse {
+    success: boolean;
+    statusCode: number;
+    message: string;
+    data: RentalRequest[];
+}
+
+export interface Property {
+    id: string;
+    title: string;
+    description: string;
+    location: string;
+    address: string;
+    rent: number;
+    bedrooms: number;
+    bathrooms: number;
+    area: number;
+    propertyType: string;
+    thumbnail: string;
+    status: string;
+}
+
+export interface PropertyResponse {
+    success: boolean;
+    statusCode: number;
+    message: string;
+    data: Property[];
+}

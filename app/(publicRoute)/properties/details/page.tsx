@@ -91,7 +91,7 @@ const PropertyDetails = ({ property }: PropertyDetailsProps) => {
             </CardHeader>
 
             <CardFooter>
-                <Button className="w-full">Book Now</Button>
+                <Button className="w-full">Property Available</Button>
             </CardFooter>
         </Card>
     );
