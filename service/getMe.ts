@@ -5,27 +5,37 @@ import { cookies } from 'next/headers';
 export const getMe = async () => {
     const cookieStore = await cookies();
 
-    const accessToken = cookieStore.get('accessToken')?.value || null;
+    const accessToken = cookieStore.get('accessToken')?.value;
 
     if (!accessToken) {
         return {
             success: false,
             message: 'User not logged in!',
+            data: null,
         };
     }
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/me`, {
-        headers: {
-            Cookie: `accessToken=${accessToken}`,
-        },
-        cache: 'force-cache',
-        next: {
-            revalidate: 60 * 60 * 24, // 1day
-            tags: ['my-profile'],
-        },
-    });
+    try {
+        const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/me`, {
+            method: 'GET',
 
-    const result = res.json();
+            headers: {
+                Cookie: `accessToken=${accessToken}`,
+            },
 
-    return result;
+            cache: 'no-store',
+        });
+
+        const result = await res.json();
+
+        return result;
+    } catch (error) {
+        console.log('GET ME ERROR:', error);
+
+        return {
+            success: false,
+            message: 'Something went wrong!',
+            data: null,
+        };
+    }
 };

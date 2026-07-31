@@ -4,7 +4,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Navbar } from '@/components/shared/Navbar';
 import { getMe } from '@/service/getMe';
-
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -28,6 +28,7 @@ export default async function RootLayout({
             <body className="min-h-full flex flex-col">
                 <Navbar user={user} />
                 {children}
+                <Toaster richColors position="top-right" />
             </body>
         </html>
     );
