@@ -1,60 +1,75 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from '@/components/ui/button';
-import {
-    Card,
-    CardAction,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
 
-import Image from 'next/image';
-import Link from 'next/link';
+import PropertyFilter from './_components/PropertyFilter';
+import PropertyCard from './_components/PropertyCard';
+import Pagination from './_components/Pagination';
 
-const Properties = async () => {
-    const data = await fetch('http://localhost:5000/api/properties');
-    const properties = await data.json();
+interface PropertiesPageProps {
+    searchParams: Promise<{
+        search?: string;
+        propertyType?: string;
+        sort?: string;
+        page?: string;
+    }>;
+}
+
+const Properties = async ({ searchParams }: PropertiesPageProps) => {
+    const params = await searchParams;
+
+    const query = new URLSearchParams();
+
+    query.set('page', params.page || '1');
+
+    query.set('limit', '2');
+
+    if (params.search) {
+        query.set('search', params.search);
+    }
+
+    if (params.propertyType) {
+        query.set('propertyType', params.propertyType);
+    }
+
+    if (params.sort) {
+        query.set('sort', params.sort);
+    }
+
+    const res = await fetch(
+        `http://localhost:5000/api/properties?${query.toString()}`,
+
+        {
+            cache: 'no-store',
+        },
+    );
+
+    const result = await res.json();
 
     return (
-        <div className="container mx-auto py-10">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {properties.data.map((property: any) => (
-                    <Card key={property.id} className="relative w-full pt-0">
-                        <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+        <div className="container mx-auto py-10 space-y-8">
+            <PropertyFilter />
 
-                        <Image
-                            src={property.thumbnail}
-                            alt="thumbnail"
-                            unoptimized
-                            width={400}
-                            height={200}
-                            className="aspect-video w-full object-cover"
-                        />
-
-                        <CardHeader>
-                            <CardAction className="bg-yellow-500 py-1 px-2 rounded-2xl">
-                                {property.propertyType}
-                            </CardAction>
-                            <CardTitle className="text-xm font-extrabold">
-                                {property.location}
-                            </CardTitle>
-                            <CardDescription>
-                                {property.description }
-                            </CardDescription>
-                        </CardHeader>
-
-                        <CardFooter>
-                            <Link
-                                href={`/properties/${property.id}`}
-                                className="w-full"
-                            >
-                                <Button className="w-full">View Details</Button>
-                            </Link>
-                        </CardFooter>
-                    </Card>
+            <div
+                className="
+                grid
+                grid-cols-1
+                sm:grid-cols-2
+                lg:grid-cols-3
+                gap-6
+            "
+            >
+                {result.data?.map((property: any) => (
+                    <PropertyCard key={property.id} property={property} />
                 ))}
             </div>
+
+            <Pagination
+                meta={
+                    result.meta || {
+                        page: 1,
+                        totalPage: 1,
+                    }
+                }
+            />
         </div>
     );
 };

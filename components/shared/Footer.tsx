@@ -93,7 +93,7 @@ const Footer = () => {
                         <Button
                             asChild
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-cyan-600"
+                            className="bg-white text-cyan-600 hover:bg-yellow-400 hover:text-black"
                         >
                             <Link href="/contact">Contact Us</Link>
                         </Button>
