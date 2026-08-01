@@ -13,17 +13,11 @@ import {
 
 import DashboardHeader from '../_components/dashboard-header';
 import StatCard from '../_components/stat-card';
+import { getAdminDashboard } from '@/lib/admin';
 
 const AdminDashboardPage = async () => {
     // TODO: Replace with API data
-    const stats = {
-        totalUsers: 2450,
-        totalProperties: 860,
-        pendingRequests: 56,
-        bannedUsers: 18,
-        activeLandlords: 420,
-        activeTenants: 2012,
-    };
+    const stats = await getAdminDashboard();
 
     return (
         <div className="space-y-6">
@@ -45,28 +39,28 @@ const AdminDashboardPage = async () => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <StatCard
                     title="Total Users"
-                    value={stats.totalUsers.toString()}
+                    value={stats.totalUsers.toString() || '0'}
                     icon={Users}
                     description="Registered accounts"
                 />
 
                 <StatCard
                     title="Properties"
-                    value={stats.totalProperties.toString()}
+                    value={stats.totalProperties.toString() || '0'}
                     icon={Building2}
                     description="Total listings"
                 />
 
                 <StatCard
                     title="Pending Requests"
-                    value={stats.pendingRequests.toString()}
+                    value={stats.pendingRequests.toString() || '0'}
                     icon={Clock}
                     description="Rental requests waiting"
                 />
 
                 <StatCard
                     title="Banned Users"
-                    value={stats.bannedUsers.toString()}
+                    value={stats.bannedUsers.toString() || '0'}
                     icon={UserX}
                     description="Blocked accounts"
                 />
