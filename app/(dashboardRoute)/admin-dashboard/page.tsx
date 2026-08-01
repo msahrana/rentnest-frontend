@@ -1,116 +1,140 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     AlertTriangle,
     Building2,
     CheckCircle2,
-    CreditCard,
     ShieldCheck,
     Users,
     UserCheck,
+    UserX,
     Clock,
+    Home,
 } from 'lucide-react';
 
 import DashboardHeader from '../_components/dashboard-header';
 import StatCard from '../_components/stat-card';
 
 const AdminDashboardPage = async () => {
+    // TODO: Replace with API data
+    const stats = {
+        totalUsers: 2450,
+        totalProperties: 860,
+        pendingRequests: 56,
+        bannedUsers: 18,
+        activeLandlords: 420,
+        activeTenants: 2012,
+    };
+
     return (
         <div className="space-y-6">
             {/* Header */}
             <DashboardHeader
                 title={
                     <>
-                        Welcome to <span className="text-yellow-500">Admin</span>{' '}
-                        Dashboard
+                        Welcome to{' '}
+                        <span className="text-yellow-500">Admin</span> Dashboard
                     </>
                 }
-                description="Manage users, properties, rental requests and platform activities"
+                description="
+                    Monitor users, properties, rental requests and
+                    overall platform activity
+                "
             />
 
-            {/* Statistics */}
+            {/* Main Statistics */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <StatCard
                     title="Total Users"
-                    value="2,450"
+                    value={stats.totalUsers.toString()}
                     icon={Users}
-                    description="Registered users"
+                    description="Registered accounts"
                 />
 
                 <StatCard
                     title="Properties"
-                    value="860"
+                    value={stats.totalProperties.toString()}
                     icon={Building2}
                     description="Total listings"
                 />
 
                 <StatCard
-                    title="Revenue"
-                    value="$45.8K"
-                    icon={CreditCard}
-                    description="Total earnings"
+                    title="Pending Requests"
+                    value={stats.pendingRequests.toString()}
+                    icon={Clock}
+                    description="Rental requests waiting"
                 />
 
                 <StatCard
-                    title="Pending Reports"
-                    value="18"
-                    icon={AlertTriangle}
-                    description="Need review"
+                    title="Banned Users"
+                    value={stats.bannedUsers.toString()}
+                    icon={UserX}
+                    description="Blocked accounts"
                 />
             </div>
 
-            {/* Platform Overview */}
+            {/* Platform Health */}
             <div className="rounded-xl border bg-background p-6">
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold">Platform Overview</h2>
 
-                    <ShieldCheck className="text-cyan-600" size={24} />
+                    <ShieldCheck className="text-cyan-600" size={26} />
                 </div>
 
                 <div className="mt-5 grid gap-4 md:grid-cols-3">
+                    {/* Active Users */}
                     <div className="rounded-lg border p-5">
                         <div className="flex items-center gap-3">
                             <UserCheck className="text-green-600" />
 
-                            <h3 className="font-semibold">Verified Users</h3>
+                            <h3 className="font-semibold">Active Users</h3>
                         </div>
 
-                        <p className="mt-3 text-3xl font-bold">1,980</p>
+                        <p className="mt-3 text-3xl font-bold">
+                            {stats.totalUsers - stats.bannedUsers}
+                        </p>
 
                         <p className="text-sm text-muted-foreground">
-                            Active accounts
+                            Currently active accounts
                         </p>
                     </div>
 
+                    {/* Landlords */}
                     <div className="rounded-lg border p-5">
                         <div className="flex items-center gap-3">
-                            <Building2 className="text-cyan-600" />
+                            <Home className="text-cyan-600" />
 
-                            <h3 className="font-semibold">Active Properties</h3>
+                            <h3 className="font-semibold">Landlords</h3>
                         </div>
 
-                        <p className="mt-3 text-3xl font-bold">720</p>
+                        <p className="mt-3 text-3xl font-bold">
+                            {stats.activeLandlords}
+                        </p>
 
                         <p className="text-sm text-muted-foreground">
-                            Available rentals
+                            Property owners
                         </p>
                     </div>
 
+                    {/* Tenants */}
                     <div className="rounded-lg border p-5">
                         <div className="flex items-center gap-3">
-                            <Clock className="text-yellow-500" />
+                            <Users className="text-yellow-500" />
 
-                            <h3 className="font-semibold">Pending Requests</h3>
+                            <h3 className="font-semibold">Tenants</h3>
                         </div>
 
-                        <p className="mt-3 text-3xl font-bold">56</p>
+                        <p className="mt-3 text-3xl font-bold">
+                            {stats.activeTenants}
+                        </p>
 
                         <p className="text-sm text-muted-foreground">
-                            Waiting approval
+                            Registered renters
                         </p>
                     </div>
                 </div>
             </div>
 
-            {/* Recent Activities */}
+            {/* Moderation Activities */}
             <div className="rounded-xl border p-6">
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold">Recent Activities</h2>
@@ -123,8 +147,8 @@ const AdminDashboardPage = async () => {
                         py-2
                         text-sm
                         text-white
-                        hover:bg-yellow-500
                         transition
+                        hover:bg-yellow-500
                         "
                     >
                         View All
@@ -134,21 +158,21 @@ const AdminDashboardPage = async () => {
                 <div className="mt-5 space-y-4">
                     {[
                         {
-                            title: 'New property submitted by landlord',
-                            status: 'Pending approval',
+                            title: 'New property submitted for review',
+                            status: 'Waiting admin approval',
                             icon: Clock,
                         },
 
                         {
-                            title: 'User account verified',
-                            status: 'Completed',
+                            title: 'User account activated',
+                            status: 'Account verification completed',
                             icon: CheckCircle2,
                         },
 
                         {
-                            title: 'Payment received successfully',
-                            status: 'Transaction completed',
-                            icon: CreditCard,
+                            title: 'Suspicious account detected',
+                            status: 'Requires moderation',
+                            icon: AlertTriangle,
                         },
                     ].map((activity) => {
                         const Icon = activity.icon;
@@ -157,28 +181,31 @@ const AdminDashboardPage = async () => {
                             <div
                                 key={activity.title}
                                 className="
-                                    flex
-                                    items-center
-                                    justify-between
-                                    rounded-lg
-                                    border
-                                    p-4
-                                    hover:bg-muted
-                                    transition
-                                    "
+                                flex
+                                items-center
+                                gap-4
+                                rounded-lg
+                                border
+                                p-4
+                                hover:bg-muted
+                                transition
+                                "
                             >
-                                <div className="flex items-center gap-4">
-                                    <Icon className="text-cyan-600" size={22} />
+                                <Icon className="text-cyan-600" size={22} />
 
-                                    <div>
-                                        <h3 className="font-medium">
-                                            {activity.title}
-                                        </h3>
+                                <div>
+                                    <h3 className="font-medium">
+                                        {activity.title}
+                                    </h3>
 
-                                        <p className="text-sm text-muted-foreground">
-                                            {activity.status}
-                                        </p>
-                                    </div>
+                                    <p
+                                        className="
+                                        text-sm
+                                        text-muted-foreground
+                                        "
+                                    >
+                                        {activity.status}
+                                    </p>
                                 </div>
                             </div>
                         );
@@ -186,71 +213,81 @@ const AdminDashboardPage = async () => {
                 </div>
             </div>
 
-            {/* Quick Actions */}
+            {/* Admin Actions */}
             <div className="rounded-xl border p-6">
-                <h2 className="text-xl font-semibold">Quick Actions</h2>
+                <h2 className="text-xl font-semibold">Admin Actions</h2>
 
-                <div className="mt-5 grid gap-4 md:grid-cols-3">
-                    <div
-                        className="
-                        cursor-pointer
-                        rounded-lg
-                        border
-                        p-5
-                        hover:bg-muted
-                        transition
+                <div
+                    className="
+                    mt-5
+                    grid
+                    gap-4
+                    md:grid-cols-3
+                    "
+                >
+                    <AdminAction
+                        icon={Users}
+                        title="Manage Users"
+                        description="
+                        Search users and ban/unban accounts
                         "
-                    >
-                        <Users className="mb-3 text-cyan-600" />
+                    />
 
-                        <h3 className="font-semibold">Manage Users</h3>
-
-                        <p className="text-sm text-muted-foreground">
-                            View, ban and manage accounts
-                        </p>
-                    </div>
-
-                    <div
-                        className="
-                        cursor-pointer
-                        rounded-lg
-                        border
-                        p-5
-                        hover:bg-muted
-                        transition
+                    <AdminAction
+                        icon={Building2}
+                        title="Manage Properties"
+                        description="
+                        Review and moderate listings
                         "
-                    >
-                        <Building2 className="mb-3 text-cyan-600" />
+                    />
 
-                        <h3 className="font-semibold">Manage Properties</h3>
-
-                        <p className="text-sm text-muted-foreground">
-                            Approve and moderate listings
-                        </p>
-                    </div>
-
-                    <div
-                        className="
-                        cursor-pointer
-                        rounded-lg
-                        border
-                        p-5
-                        hover:bg-muted
-                        transition
+                    <AdminAction
+                        icon={ShieldCheck}
+                        title="Content Moderation"
+                        description="
+                        Monitor platform activities
                         "
-                    >
-                        <ShieldCheck className="mb-3 text-cyan-600" />
-
-                        <h3 className="font-semibold">Security</h3>
-
-                        <p className="text-sm text-muted-foreground">
-                            Monitor platform security
-                        </p>
-                    </div>
+                    />
                 </div>
             </div>
         </div>
     );
 };
+
+function AdminAction({
+    icon: Icon,
+    title,
+    description,
+}: {
+    icon: any;
+    title: string;
+    description: string;
+}) {
+    return (
+        <div
+            className="
+            cursor-pointer
+            rounded-lg
+            border
+            p-5
+            transition
+            hover:bg-muted
+            "
+        >
+            <Icon className="mb-3 text-cyan-600" size={28} />
+
+            <h3 className="font-semibold">{title}</h3>
+
+            <p
+                className="
+                text-sm
+                text-muted-foreground
+                "
+            >
+                {description}
+            </p>
+        </div>
+    );
+}
 
 export default AdminDashboardPage;
