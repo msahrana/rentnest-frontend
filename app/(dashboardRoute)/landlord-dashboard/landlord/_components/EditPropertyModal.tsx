@@ -10,8 +10,6 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 
-import { Button } from '@/components/ui/button';
-
 import { toast } from 'sonner';
 
 import { getPropertyById } from '../actions';
@@ -19,31 +17,32 @@ import { getPropertyById } from '../actions';
 import PropertyForm from './PropertyForm';
 
 import { PropertyFormInput } from '@/lib/types';
+import { Button } from '@/components/ui/button';
 
 interface Props {
     propertyId: string;
+
+    open: boolean;
+
+    setOpen: (value: boolean) => void;
 }
 
-const EditPropertyModal = ({ propertyId }: Props) => {
-    const [open, setOpen] = useState(false);
-
+const EditPropertyModal = ({ propertyId, open, setOpen }: Props) => {
     const [loading, setLoading] = useState(false);
 
     const [defaultData, setDefaultData] = useState<PropertyFormInput | null>(
         null,
     );
 
-    const loadProperty = async () => {
+    const handleEdit = async () => {
         try {
-            setLoading(true);
-
             const result = await getPropertyById(propertyId);
 
             setDefaultData(result.data);
 
             setOpen(true);
         } catch (error: any) {
-            toast.error('Failed to load property', error);
+            toast.error(error.message || 'Failed to load property');
         } finally {
             setLoading(false);
         }
@@ -51,17 +50,27 @@ const EditPropertyModal = ({ propertyId }: Props) => {
 
     return (
         <>
-            <Button variant="ghost" onClick={loadProperty} disabled={loading}>
-                Edit
+            {/* This button is used from dropdown */}
+            <Button
+                onClick={handleEdit}
+                disabled={loading}
+                className="
+                    text-left
+                    px-2
+                    py-1.5
+                    text-sm
+                "
+            >
+                {loading ? 'Loading...' : 'Edit'}
             </Button>
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent
                     className="
-                max-w-3xl
-                max-h-[90vh]
-                overflow-y-auto
-                "
+                    max-w-3xl
+                    max-h-[90vh]
+                    overflow-y-auto
+                    "
                 >
                     <DialogHeader>
                         <DialogTitle>Edit Property</DialogTitle>
@@ -71,7 +80,10 @@ const EditPropertyModal = ({ propertyId }: Props) => {
                         <PropertyForm
                             initialData={defaultData}
                             propertyId={propertyId}
-                            onSuccess={() => setOpen(false)}
+                            onSuccess={() => {
+                                setOpen(false);
+                                setDefaultData(null);
+                            }}
                         />
                     )}
                 </DialogContent>

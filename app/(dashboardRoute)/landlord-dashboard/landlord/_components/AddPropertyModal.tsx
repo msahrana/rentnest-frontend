@@ -42,7 +42,11 @@ const AddPropertyModal = () => {
                     <DialogTitle>Create New Property</DialogTitle>
                 </DialogHeader>
 
-                <PropertyForm onSuccess={() => setOpen(false)} />
+                <PropertyForm
+                    onSuccess={() => {
+                        setOpen(false);
+                    }}
+                />
             </DialogContent>
         </Dialog>
     );

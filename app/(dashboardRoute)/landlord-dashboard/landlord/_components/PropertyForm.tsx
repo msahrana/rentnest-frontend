@@ -1,15 +1,13 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-
 import { PropertyFormInput } from '@/lib/types';
-
-import { createProperty } from '../actions';
+import { createProperty, updateProperty } from '../actions';
 import BasicInfo from './BasicInfo';
 import LocationInfo from './LocationInfo';
 import PropertyDetails from './PropertyDetails';
@@ -19,17 +17,19 @@ import AmenitiesField from './AmenitiesField';
 
 interface Props {
     onSuccess: () => void;
-
     initialData?: PropertyFormInput;
-
     propertyId?: string;
 }
 
-export default function PropertyForm({ onSuccess }: Props) {
+export default function PropertyForm({
+    onSuccess,
+    initialData,
+    propertyId,
+}: Props) {
     const router = useRouter();
 
     const form = useForm<PropertyFormInput>({
-        defaultValues: {
+        defaultValues: initialData ?? {
             title: '',
 
             description: '',
@@ -58,11 +58,25 @@ export default function PropertyForm({ onSuccess }: Props) {
         },
     });
 
+    // Load previous data in edit mode
+
+    useEffect(() => {
+        if (initialData) {
+            form.reset(initialData);
+        }
+    }, [initialData, form]);
+
     const onSubmit = async (data: PropertyFormInput) => {
         try {
-            await createProperty(data);
+            if (propertyId) {
+                await updateProperty(propertyId, data);
 
-            toast.success('Property created successfully');
+                toast.success('Property updated successfully');
+            } else {
+                await createProperty(data);
+
+                toast.success('Property created successfully');
+            }
 
             form.reset();
 
@@ -71,9 +85,7 @@ export default function PropertyForm({ onSuccess }: Props) {
             onSuccess();
         } catch (error) {
             toast.error(
-                error instanceof Error
-                    ? error.message
-                    : 'Failed to create property',
+                error instanceof Error ? error.message : 'Something went wrong',
             );
         }
     };
@@ -93,12 +105,20 @@ export default function PropertyForm({ onSuccess }: Props) {
 
                 <AmenitiesField form={form} />
 
-                <div className="flex justify-end gap-3 pt-5">
+                <div
+                    className="
+                    flex
+                    justify-end
+                    gap-3
+                    pt-5
+                "
+                >
                     <Button
                         type="button"
                         variant="outline"
                         onClick={() => {
                             form.reset();
+
                             onSuccess();
                         }}
                     >
@@ -110,8 +130,10 @@ export default function PropertyForm({ onSuccess }: Props) {
                         disabled={form.formState.isSubmitting}
                     >
                         {form.formState.isSubmitting
-                            ? 'Creating...'
-                            : 'Create Property'}
+                            ? 'Saving...'
+                            : propertyId
+                              ? 'Update Property'
+                              : 'Create Property'}
                     </Button>
                 </div>
             </form>

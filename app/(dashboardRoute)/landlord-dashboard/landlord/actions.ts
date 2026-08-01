@@ -122,17 +122,10 @@ export async function getCategories() {
 }
 
 export async function deleteProperty(propertyId: string) {
-    const cookieStore = await cookies();
-
-    const token = cookieStore.get('accessToken')?.value;
-
-    if (!token) {
-        throw new Error('Authentication token missing');
-    }
+    const token = await getToken();
 
     const response = await fetch(
         `${process.env.BACKEND_API_URL}/api/landlord/properties/${propertyId}`,
-
         {
             method: 'DELETE',
 
@@ -185,20 +178,12 @@ export async function getPropertyById(propertyId: string) {
 
 export async function updateProperty(
     propertyId: string,
-
     data: PropertyFormInput,
 ) {
-    const cookieStore = await cookies();
-
-    const token = cookieStore.get('accessToken')?.value;
-
-    if (!token) {
-        throw new Error('Authentication token missing');
-    }
+    const token = await getToken();
 
     const response = await fetch(
         `${process.env.BACKEND_API_URL}/api/landlord/properties/${propertyId}`,
-
         {
             method: 'PUT',
 
