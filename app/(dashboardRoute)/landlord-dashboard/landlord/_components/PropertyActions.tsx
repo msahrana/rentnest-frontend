@@ -1,7 +1,9 @@
 'use client';
 
-import { MoreVertical, Trash2, Edit } from 'lucide-react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { MoreVertical, Edit, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
     DropdownMenu,
@@ -12,10 +14,7 @@ import {
 
 import { Button } from '@/components/ui/button';
 
-import { toast } from 'sonner';
-
 import { deleteProperty } from '../actions';
-
 import EditPropertyModal from './EditPropertyModal';
 
 interface Props {
@@ -23,22 +22,28 @@ interface Props {
 }
 
 const PropertyActions = ({ propertyId }: Props) => {
+    const router = useRouter();
+
     const [editOpen, setEditOpen] = useState(false);
 
     const handleDelete = async () => {
-        const confirmDelete = confirm(
+        const confirmed = window.confirm(
             'Are you sure you want to delete this property?',
         );
 
-        if (!confirmDelete) return;
+        if (!confirmed) return;
 
         try {
             await deleteProperty(propertyId);
 
             toast.success('Property deleted successfully');
+
+            router.refresh();
         } catch (error) {
             toast.error(
-                error instanceof Error ? error.message : 'Delete failed',
+                error instanceof Error
+                    ? error.message
+                    : 'Failed to delete property',
             );
         }
     };
@@ -48,21 +53,18 @@ const PropertyActions = ({ propertyId }: Props) => {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon">
-                        <MoreVertical size={18} />
+                        <MoreVertical className="h-4 w-4" />
                     </Button>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem onClick={() => setEditOpen(true)}>
-                        <Edit size={16} className="mr-2" />
+                        <Edit className="mr-2 h-4 w-4" />
                         Edit
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem
-                        onClick={handleDelete}
-                        className="text-red-600"
-                    >
-                        <Trash2 size={16} className="mr-2" />
+                    <DropdownMenuItem onClick={handleDelete}>
+                        <Trash2 className="mr-2 h-4 w-4" />
                         Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>
