@@ -1,6 +1,10 @@
 import { LucideProps } from 'lucide-react';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
 
+/* ==========================
+   Navbar
+========================== */
+
 type IUser = {
     success: boolean;
     message: string;
@@ -37,12 +41,80 @@ export type ISidebarItem = {
     >;
 };
 
+/* ==========================
+   Enums
+========================== */
+
 export type RentalRequestStatus =
     | 'PENDING'
     | 'APPROVED'
     | 'REJECTED'
     | 'COMPLETED'
     | 'CANCELLED';
+
+export type PaymentStatus = 'PENDING' | 'COMPLETED' | 'FAILED' | 'REFUNDED';
+
+/* ==========================
+   Property
+========================== */
+
+export interface Category {
+    id: string;
+    name: string;
+    description: string;
+}
+
+export interface Landlord {
+    id: string;
+    name: string;
+    email: string;
+    role?: string;
+    status?: string;
+}
+
+export interface Property {
+    id: string;
+    title: string;
+    description: string;
+    location: string;
+    address: string;
+    rent: number;
+    bedrooms: number;
+    bathrooms: number;
+    area: number;
+    propertyType: string;
+
+    amenities: string[];
+
+    thumbnail: string;
+
+    images: string[];
+
+    status: string;
+
+    landlordId: string;
+
+    categoryId: string;
+
+    createdAt: string;
+
+    updatedAt: string;
+
+    landlord: Landlord;
+
+    category: Category;
+}
+
+export interface PropertyResponse {
+    success: boolean;
+    statusCode: number;
+    message: string;
+    data: Property[];
+}
+
+/* ==========================
+   Rental Request
+========================== */
 
 export interface IRentalProperty {
     id: string;
@@ -51,23 +123,38 @@ export interface IRentalProperty {
     thumbnail?: string;
     location?: string;
 
-    landlord?: {
-        id: string;
-        name: string;
-        email: string;
-    };
+    landlord?: Landlord;
 
-    category?: {
+    category?: Category;
+}
+
+export interface IRentalRequestPayment {
+    id: string;
+
+    property: {
         id: string;
-        name: string;
+        title: string;
+        location: string;
+        rent: number;
     };
 }
 
 export interface IPayment {
     id: string;
+
     amount: number;
-    status: string;
+
+    transactionId: string;
+
+    status: PaymentStatus;
+
     method: string;
+
+    provider: string;
+
+    paidAt?: string | null;
+
+    rentalRequest: IRentalRequestPayment;
 }
 
 export interface IRentalRequest {
@@ -92,77 +179,24 @@ export interface IRentalRequest {
     updatedAt: string;
 }
 
-export interface IPaymentProperty {
-    id: string;
-    title: string;
-    location: string;
-    rent: number;
-}
-
-export interface IRentalRequestPayment {
-    id: string;
-
-    property: IPaymentProperty;
-}
-
-export interface IPayment {
-    id: string;
-
-    amount: number;
-
-    transactionId: string;
-
-    RentalRequestStatus: 'PENDING' | 'COMPLETED' | 'FAILED' | 'REFUNDED';
-
-    method: string;
-
-    provider: string;
-
-    paidAt?: string | null;
-
-    rentalRequest: IRentalRequestPayment;
-}
-
 export interface RentalRequest {
     id: string;
+
     tenantId: string;
+
     propertyId: string;
+
     moveInDate: string;
+
     message: string;
+
     status: RentalRequestStatus;
+
     createdAt: string;
+
     updatedAt: string;
 
-    property: {
-        id: string;
-        title: string;
-        description: string;
-        location: string;
-        address: string;
-        rent: number;
-        bedrooms: number;
-        bathrooms: number;
-        area: number;
-        propertyType: string;
-        amenities: string[];
-        thumbnail: string;
-        images: string[];
-        status: string;
-        landlordId: string;
-        categoryId: string;
-
-        landlord: {
-            id: string;
-            name: string;
-            email: string;
-        };
-
-        category: {
-            id: string;
-            name: string;
-            description: string;
-        };
-    };
+    property: Property;
 
     payment: {
         id: string;
@@ -172,7 +206,7 @@ export interface RentalRequest {
         amount: number;
         method: string;
         provider: string;
-        status: string;
+        status: PaymentStatus;
         paidAt: string;
         stripeCustomerId: string;
         currentPeriodEnd: string;
@@ -188,24 +222,34 @@ export interface RentalResponse {
     data: RentalRequest[];
 }
 
-export interface Property {
-    id: string;
-    title: string;
-    description: string;
-    location: string;
-    address: string;
-    rent: number;
-    bedrooms: number;
-    bathrooms: number;
-    area: number;
-    propertyType: string;
-    thumbnail: string;
-    status: string;
-}
+/* ==========================
+   Property Form
+========================== */
 
-export interface PropertyResponse {
-    success: boolean;
-    statusCode: number;
-    message: string;
-    data: Property[];
+export interface PropertyFormInput {
+    title: string;
+
+    description: string;
+
+    location: string;
+
+    address: string;
+
+    rent: number;
+
+    bedrooms: number;
+
+    bathrooms: number;
+
+    area: number;
+
+    propertyType: string;
+
+    categoryId: string;
+
+    thumbnail: string;
+
+    images: string[];
+
+    amenities: string[];
 }

@@ -4,17 +4,22 @@ import { CircleUserRoundIcon, FileText, LayoutDashboard } from 'lucide-react';
 export const LANDLORD_SIDEBAR_ITEMS: ISidebarItem[] = [
     {
         label: 'Dashboard',
-        href: '/author-dashboard',
+        href: '/landlord-dashboard',
         icon: LayoutDashboard,
     },
     {
-        label: 'My Properties',
-        href: '/author-dashboard/my-properties',
+        label: 'All Properties',
+        href: '/landlord-dashboard/landlord',
         icon: FileText,
     },
+    // {
+    //     label: 'My Properties',
+    //     href: '/landlord-dashboard/properties/new',
+    //     icon: FileText,
+    // },
     {
         label: 'Profile',
-        href: '/author-dashboard/profile',
+        href: '/landlord-dashboard/profile',
         icon: CircleUserRoundIcon,
     },
 ];
