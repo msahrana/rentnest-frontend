@@ -4,15 +4,15 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(
     request: NextRequest,
     context: {
-        params: {
+        params: Promise<{
             id: string;
-        };
+        }>;
     },
 ) {
     try {
         const token = request.cookies.get('accessToken')?.value;
 
-        const { id } = context.params;
+        const { id } = await context.params;
 
         const response = await fetch(
             `${process.env.BACKEND_API_URL}/api/rentals/${id}`,
