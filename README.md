@@ -109,3 +109,95 @@ Admins can:
 ---
 
 # 📂 Project Structure
+
+rentnest-frontend
+│
+├── app
+│ ├── (public)
+│ │ ├── page.tsx
+│ │ ├── properties
+│ │ └── properties/[id]
+│ │
+│ ├── auth
+│ │ ├── login
+│ │ └── register
+│ │
+│ ├── dashboard
+│ │ ├── tenant
+│ │ ├── landlord
+│ │ └── admin
+│ │
+│ ├── payment
+│ │ ├── success
+│ │ └── cancel
+│ │
+│ ├── error.tsx
+│ └── loading.tsx
+│
+├── components
+│ ├── ui
+│ ├── shared
+│ ├── property
+│ └── dashboard
+│
+├── hooks
+│
+├── lib
+│ ├── api.ts
+│ ├── utils.ts
+│ └── validations.ts
+│
+├── types
+│
+├── middleware.ts
+│
+├── public
+│
+├── package.json
+└── README.md
+
+---
+
+# 🌐 Application Routes
+
+## Public Routes
+
+| Route              | Description                       |
+| ------------------ | --------------------------------- |
+| `/`                | Homepage with featured properties |
+| `/properties`      | Browse and filter properties      |
+| `/properties/[id]` | Property details page             |
+| `/auth/register`   | User registration                 |
+| `/auth/login`      | User login                        |
+
+---
+
+## Tenant Routes
+
+| Route                                 | Description              |
+| ------------------------------------- | ------------------------ |
+| `/dashboard/tenant`                   | Tenant overview          |
+| `/dashboard/tenant/requests/[id]/pay` | Payment page             |
+| `/payment/success`                    | Payment success          |
+| `/payment/cancel`                     | Payment failed/cancelled |
+
+---
+
+## Landlord Routes
+
+| Route                                | Description            |
+| ------------------------------------ | ---------------------- |
+| `/dashboard/landlord`                | Landlord dashboard     |
+| `/dashboard/landlord/properties/new` | Add new property       |
+| `/dashboard/landlord/requests`       | Manage rental requests |
+
+---
+
+## Admin Routes
+
+| Route                    | Description     |
+| ------------------------ | --------------- |
+| `/dashboard/admin`       | Admin dashboard |
+| `/dashboard/admin/users` | User management |
+
+---
