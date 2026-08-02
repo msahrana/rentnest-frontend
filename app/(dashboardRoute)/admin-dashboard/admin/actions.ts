@@ -2,7 +2,8 @@
 
 import { cookies } from 'next/headers';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL =
+    process.env.BACKEND_API_URL 
 
 export async function getAdminUsers(page: number = 1, search: string = '') {
     const cookieStore = await cookies();

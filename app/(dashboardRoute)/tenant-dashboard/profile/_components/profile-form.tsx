@@ -101,7 +101,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
             setLoading(true);
 
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/auth/my-profile`,
+                `${process.env.BACKEND_API_URL}/api/auth/my-profile`,
                 {
                     method: 'PUT',
                     credentials: 'include',

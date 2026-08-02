@@ -4,9 +4,12 @@ import { Button } from '@/components/ui/button';
 import PropertyCard from '../property/PropertyCard';
 
 const FeaturedProperties = async () => {
-    const res = await fetch('http://localhost:5000/api/properties?limit=6', {
-        cache: 'no-store',
-    });
+    const res = await fetch(
+        `${process.env.BACKEND_API_URL}/api/properties?limit=6`,
+        {
+            cache: 'no-store',
+        },
+    );
 
     const result = await res.json();
 

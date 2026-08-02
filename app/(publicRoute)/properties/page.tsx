@@ -35,7 +35,7 @@ const Properties = async ({ searchParams }: PropertiesPageProps) => {
     }
 
     const res = await fetch(
-        `http://localhost:5000/api/properties?${query.toString()}`,
+        `${process.env.BACKEND_API_URL}/api/properties?${query.toString()}`,
 
         {
             cache: 'no-store',

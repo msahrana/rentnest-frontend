@@ -1,6 +1,6 @@
 // import PropertyDetails from "@/components/PropertyDetails";
 
-import PropertyDetails from "../details/page";
+import PropertyDetails from '../details/page';
 
 interface Props {
     params: Promise<{
@@ -12,10 +12,10 @@ const PropertyDetailsPage = async ({ params }: Props) => {
     const { id } = await params;
 
     const res = await fetch(
-        `http://localhost:5000/api/properties/${id}`,
+        `${process.env.BACKEND_API_URL}/api/properties/${id}`,
         {
-            cache: "no-store",
-        }
+            cache: 'no-store',
+        },
     );
 
     const result = await res.json();
