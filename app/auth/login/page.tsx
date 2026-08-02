@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import LoginForm from '../../(authRoute)/_components/LoginForm';
 
 export default function LoginPage() {
@@ -15,6 +16,19 @@ export default function LoginPage() {
 
                     {/* FORM */}
                     <LoginForm />
+
+                    <div>
+                        <h1>
+                            Don`t have an account?{' '}
+                            <Link
+                                href="/auth/signup"
+                                className="text-cyan-600 font-bold"
+                            >
+                                {' '}
+                                Sign Up
+                            </Link>
+                        </h1>
+                    </div>
                 </div>
             </div>
         </>

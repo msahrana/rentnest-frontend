@@ -1,3 +1,4 @@
+import Link from 'next/dist/client/link';
 import RegisterForm from '../../(authRoute)/_components/RegisterForm';
 
 const Register = () => {
@@ -14,6 +15,19 @@ const Register = () => {
                     </div>
                     {/* FORM */}
                     <RegisterForm />
+
+                    <div>
+                        <h1>
+                            Already have an account?{' '}
+                            <Link
+                                href="/auth/login"
+                                className="text-cyan-600 font-bold"
+                            >
+                                {' '}
+                                Log In
+                            </Link>
+                        </h1>
+                    </div>
                 </div>
             </div>
         </>

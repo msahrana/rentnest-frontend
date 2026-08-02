@@ -71,3 +71,57 @@ export const loginAction = async (
 
     return result;
 };
+
+type RegisterState = {
+    success: boolean;
+    message: string;
+};
+
+export const registerAction = async (
+    prevState: RegisterState,
+    formData: FormData,
+): Promise<RegisterState> => {
+    try {
+        const payload = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            phone: formData.get('phone'),
+            profilePhoto: formData.get('profilePhoto'),
+            role: formData.get('role'),
+        };
+
+        const res = await fetch(
+            `${process.env.BACKEND_API_URL}/api/auth/register`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+                cache: 'no-store',
+            },
+        );
+
+        const result = await res.json();
+
+        if (!res.ok) {
+            return {
+                success: false,
+                message: result.message || 'Registration failed',
+            };
+        }
+
+        return {
+            success: true,
+            message: result.message || 'Registration successful!',
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            success: false,
+            message: 'Something went wrong!',
+        };
+    }
+};

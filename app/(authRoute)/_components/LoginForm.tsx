@@ -17,8 +17,12 @@ const LoginForm = () => {
     );
 
     useEffect(() => {
-        if (!state.success) {
-            toast.error(state.message || 'Login failed');
+        if (!state.message) return;
+
+        if (state.success) {
+            toast.success(state.message);
+        } else {
+            toast.error(state.message);
         }
     }, [state]);
 
